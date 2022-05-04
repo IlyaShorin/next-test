@@ -1,7 +1,7 @@
 import { useStores } from '../hooks/useStore';
 import { observer } from 'mobx-react-lite';
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Content.module.css';
 
 export const Content = observer(function Content() {
@@ -9,18 +9,11 @@ export const Content = observer(function Content() {
     notion: { textList, select },
   } = useStores();
   const { notion } = useStores();
+  const [key, setkey] = useState(0);
   useEffect(() => {
-    // document.addEventListener('keydown', listener);
     localStorage.setItem('list', JSON.stringify(textList));
-    // return function () {
-    //   document.removeEventListener('keydown', listener);
-    // };
+    document.querySelector<HTMLInputElement>(`#_${key}`)?.focus();
   });
-  // const listener = (e: KeyboardEvent) => {
-  //   if (e.key === 'Enter') {
-  //     notion.addTextListItem();
-  //   }
-  // };
 
   return (
     <>
@@ -42,7 +35,7 @@ export const Content = observer(function Content() {
                   | 'checkbox';
                 notion.changeTextListKind(index, value);
               }}
-              defaultValue={textElement.kind}
+              value={textElement.kind}
             >
               {select.map((selectElement, index) => {
                 return (
@@ -68,16 +61,15 @@ export const Content = observer(function Content() {
                 notion.changeTextElementValue(index, e.target.value);
               }}
               value={textElement.value}
-              onClick={(e) => {
-                console.log(e.target);
-              }}
               autoFocus={index === 0}
               className={styles.input}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   notion.addTextListItem(index);
+                  setkey(index + 1);
                 }
               }}
+              id={`_${index}`}
             ></input>
           </div>
         );
