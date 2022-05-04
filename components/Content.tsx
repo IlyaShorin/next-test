@@ -10,17 +10,17 @@ export const Content = observer(function Content() {
   } = useStores();
   const { notion } = useStores();
   useEffect(() => {
-    document.addEventListener('keydown', listener);
+    // document.addEventListener('keydown', listener);
     localStorage.setItem('list', JSON.stringify(textList));
-    return function () {
-      document.removeEventListener('keydown', listener);
-    };
+    // return function () {
+    //   document.removeEventListener('keydown', listener);
+    // };
   });
-  const listener = (e: KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      notion.addTextListItem();
-    }
-  };
+  // const listener = (e: KeyboardEvent) => {
+  //   if (e.key === 'Enter') {
+  //     notion.addTextListItem();
+  //   }
+  // };
 
   return (
     <>
@@ -68,6 +68,16 @@ export const Content = observer(function Content() {
                 notion.changeTextElementValue(index, e.target.value);
               }}
               value={textElement.value}
+              onClick={(e) => {
+                console.log(e.target);
+              }}
+              autoFocus={index === 0}
+              className={styles.input}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  notion.addTextListItem(index);
+                }
+              }}
             ></input>
           </div>
         );

@@ -24,7 +24,7 @@ export class NotionPageStore {
   changeTextElementValue(index: number, value: string | number) {
     this.textList[index].value = value;
   }
-  addTextListItem() {
-    this.textList.push({ kind: 'text', value: '' });
+  addTextListItem(index: number) {
+    this.textList.splice(index + 1, 0, { kind: 'text', value: '' });
   }
 }
