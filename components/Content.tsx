@@ -2,7 +2,6 @@ import { useStores } from '../hooks/useStore';
 import { observer } from 'mobx-react-lite';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import styles from './Content.module.css';
 
 export const Content = observer(function Content() {
   const {
@@ -61,8 +60,8 @@ export const Content = observer(function Content() {
                 notion.changeTextElementValue(index, e.target.value);
               }}
               value={textElement.value}
-              autoFocus={index === 0}
-              className={styles.input}
+              // className={`${styles.focus} ${styles[textElement.kind]}`}
+              className={`focus ${textElement.kind}`}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   notion.addTextListItem(index);
