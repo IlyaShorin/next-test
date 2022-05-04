@@ -67,6 +67,7 @@ export const Content = observer(function Content() {
               onChange={(e) => {
                 notion.changeTextElementValue(index, e.target.value);
               }}
+              value={textElement.value}
             ></input>
           </div>
         );
